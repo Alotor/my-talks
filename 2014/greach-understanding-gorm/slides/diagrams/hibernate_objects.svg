@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1052.3622"
+   height="744.09448"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="hibernate_objects.svg">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible">
+      <path
+         id="path3792"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         id="path3789"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart-5"
+       style="overflow:visible">
+      <path
+         id="path3789-5"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="551.77821"
+     inkscape:cy="405.79739"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:snap-global="false"
+     inkscape:window-width="1030"
+     inkscape:window-height="729"
+     inkscape:window-x="332"
+     inkscape:window-y="18"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-308.2677)">
+    <g
+       id="g3820"
+       transform="translate(137.14286,438.57143)"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_objects.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131">
+      <path
+         transform="matrix(1.0041073,0,0,0.7226696,-34.588077,76.838783)"
+         d="m 565.71428,372.36218 c 0,45.76074 -64.59892,82.85714 -144.28572,82.85714 -79.6868,0 -144.28572,-37.0964 -144.28572,-82.85714 0,-45.76073 64.59892,-82.85714 144.28572,-82.85714 79.6868,0 144.28572,37.09641 144.28572,82.85714 z"
+         sodipodi:ry="82.85714"
+         sodipodi:rx="144.28572"
+         sodipodi:cy="372.36218"
+         sodipodi:cx="421.42856"
+         id="path2985"
+         style="fill:#241c1c;fill-opacity:1;stroke:#000000;stroke-width:8;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text2987"
+         y="359.11722"
+         x="267.7218"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#95ac22;fill-opacity:1;stroke:none;font-family:Dwarven Stonecraft;-inkscape-font-specification:Dwarven Stonecraft"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#95ac22;fill-opacity:1;font-family:Monospace;-inkscape-font-specification:Monospace"
+           y="359.11722"
+           x="267.7218"
+           id="tspan2989"
+           sodipodi:role="line">PERSISTENT</tspan></text>
+    </g>
+    <g
+       id="g3825"
+       transform="translate(172.85714,-8.5714314)"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_objects.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131">
+      <g
+         id="g3794">
+        <path
+           sodipodi:type="arc"
+           style="fill:#241c1c;fill-opacity:1;stroke:#000000;stroke-width:8;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           id="path2985-2"
+           sodipodi:cx="421.42856"
+           sodipodi:cy="372.36218"
+           sodipodi:rx="144.28572"
+           sodipodi:ry="82.85714"
+           d="m 565.71428,372.36218 c 0,45.76074 -64.59892,82.85714 -144.28572,82.85714 -79.6868,0 -144.28572,-37.0964 -144.28572,-82.85714 0,-45.76073 64.59892,-82.85714 144.28572,-82.85714 79.6868,0 144.28572,37.09641 144.28572,82.85714 z"
+           transform="matrix(1.0041073,0,0,0.7226696,158.26908,293.26736)" />
+        <text
+           xml:space="preserve"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#95ac22;fill-opacity:1;stroke:none;font-family:Dwarven Stonecraft;-inkscape-font-specification:Dwarven Stonecraft"
+           x="482.85715"
+           y="577.36212"
+           id="text2987-2"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan2989-0"
+             x="482.85715"
+             y="577.36212"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#95ac22;fill-opacity:1;font-family:Monospace;-inkscape-font-specification:Monospace">DETACHED</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g3812"
+       transform="translate(172.85714,-11.428571)"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_objects.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131">
+      <path
+         transform="matrix(1.0041073,0,0,0.7226696,-257.44521,296.1245)"
+         d="m 565.71428,372.36218 c 0,45.76074 -64.59892,82.85714 -144.28572,82.85714 -79.6868,0 -144.28572,-37.0964 -144.28572,-82.85714 0,-45.76073 64.59892,-82.85714 144.28572,-82.85714 79.6868,0 144.28572,37.09641 144.28572,82.85714 z"
+         sodipodi:ry="82.85714"
+         sodipodi:rx="144.28572"
+         sodipodi:cy="372.36218"
+         sodipodi:cx="421.42856"
+         id="path2985-4"
+         style="fill:#241c1c;fill-opacity:1;stroke:#000000;stroke-width:8;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text2987-7"
+         y="578.40289"
+         x="57.70647"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#95ac22;fill-opacity:1;stroke:none;font-family:Dwarven Stonecraft;-inkscape-font-specification:Dwarven Stonecraft"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#95ac22;fill-opacity:1;font-family:Monospace;-inkscape-font-specification:Monospace"
+           y="578.40289"
+           x="57.70647"
+           id="tspan2989-4"
+           sodipodi:role="line">TRANSIENT</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"
+       x="387.14285"
+       y="938.07648"
+       id="text3856"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_objects.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131"><tspan
+         sodipodi:role="line"
+         x="387.14285"
+         y="938.07648"
+         id="tspan3860">get/find/HQL</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"
+       x="292.85715"
+       y="688.07642"
+       id="text3864"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_objects.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131"><tspan
+         sodipodi:role="line"
+         id="tspan3866"
+         x="292.85715"
+         y="688.07642">save</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"
+       x="298.57144"
+       y="400.93359"
+       id="text3868"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_objects.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131"><tspan
+         sodipodi:role="line"
+         id="tspan3870"
+         x="298.57144"
+         y="400.93359">new</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"
+       x="512.21466"
+       y="703.00543"
+       id="text3876"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_objects.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131"><tspan
+         sodipodi:role="line"
+         id="tspan3878"
+         x="512.21466"
+         y="703.00543">discard</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.93334323;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#Arrow1Lend)"
+       d="m 355.48049,618.91591 111.95561,105.204"
+       id="path3854-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_objects.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.76190794;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lstart);marker-mid:none;marker-end:none"
+       d="M 643.16935,604.81113 577.42727,724.13142"
+       id="path3854-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_objects.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.084319px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 334.28571,418.11863 0,69.59879"
+       id="path3916"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_objects.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.91127932px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:none"
+       d="m 524.81109,852.88871 0,48.63947"
+       id="path3916-0"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_objects.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"
+       x="681.77521"
+       y="656.67938"
+       id="text3876-7"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_objects.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131"><tspan
+         sodipodi:role="line"
+         id="tspan3878-6"
+         x="681.77521"
+         y="656.67938">attach</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.76835126;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-mid:none;marker-end:url(#Arrow1Lend)"
+       d="M 723.76153,627.17362 659.77137,751.84281"
+       id="path3854-3-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_objects.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131" />
+  </g>
+</svg>

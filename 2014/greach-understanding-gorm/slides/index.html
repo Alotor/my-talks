@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Understanding GORM</title>
+
+        <meta name="description" content="Understanding GORM">
+        <meta name="author" content="Alonso Torres">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/greach.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/googlecode.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <link href='http://fonts.googleapis.com/css?family=Germania+One' rel='stylesheet' type='text/css'>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+            <div class="slides">
+                <section data-background="#262626">
+                    <h1><span style="color:#95AC22">U</span><span style="color:#ffffff;">nderstanding</span> <span style="color:#95AC22">G</span><span style="color: #ffffff;">ORM</span></h1>
+                    <div style="text-align:center;">
+                        <img src="img/logo_greach.png" width="300" style="margin-top: 75px auto;"/>
+                    </div>
+                    <div style="margin-top: 50px; font-size: 50px;">
+                        <p style="color:grey; display: inline-block; margin-right: 20px;">Alonso Torres</p>
+                        <p style="color:grey; display: inline-block;">@alotor</p>
+                    </div>
+                    <a href="http://goo.gl/U6sK5E">http://goo.gl/U6sK5E</a>
+                </section>
+
+                <section>
+                    <h2>Ego-slide</h2>
+                    <p style="font-size: 50px;">Alonso Torres</p>
+                    <div style="margin-top: 50px;">
+                        <div style="display: inline-block;"><img src="img/github.png" width="50" style="margin:0px 15px -15px 0px;"/><span>alotor</span></div>
+                        <div style="display: inline-block;"><img src="img/twitter.png" width="50" style="margin:0px 15px -15px 50px;"/><span>@alotor</span></div>
+                    </div>
+                    <p style="margin-top: 50px;">Engineer at Kaleidos</p>
+                    <img src="img/kaleidos.png"/>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## GORM? Really?
+                        Is so easy, the easiest part of Grails! <!-- .element: class="fragment" -->
+
+                        Only a few POGO's to access the database <!-- .element: class="fragment" -->
+
+                        Peachy! <!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-background="#262626">
+                    <img src="img/trap.jpg" width="100%"/>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Some pitfalls
+                        The 'When did I modified that object?'
+                        <pre><code class='groovy' data-trim>
+def renderBook(String isbn) {
+    def book = Book.findByIsbn(isbn)
+
+    // Render as uppercase
+    book.title = book.title.toUpperCase()
+
+    [book: book]
+}
+                        </code></pre>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Some pitfalls
+                        The 'Rollback where are you?'
+                        <pre><code class='groovy' data-trim>
+def buyBook(String user, String bookTitle, Long qty) {
+    def found = Book.findByTitle(bookTitle)
+
+    // Save a new order for the user
+    def order = new BookOrder(user:user, book:found, quantity: qty)
+    order.save()
+
+    found.stock = found.stock - 1
+
+    // When not found throw exception to rollback
+    if (found.stock < 0) {
+        throw new Exception("This should rollback!")
+    }
+    return found
+}
+                        </code></pre>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Some pitfalls
+                        The 'Concurrency, It's easy!!'
+                        <pre><code class='groovy' data-trim>
+def processOrders() {
+    def orders = BookOrder.list()
+
+    // Parallel update orders
+    GParsPool.withPool(10) {
+        orders.eachParallel { order ->
+            dispatchingService.dispatch(order)
+            order.sent = true
+            order.save()
+        }
+    }
+}
+                        </code></pre>
+                    </script>
+                </section>
+
+<!--
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Some pitfalls
+                        The 'Fail whale'
+                        <pre><code class='groovy' data-trim>
+class User {
+    String name
+    static hasMany = [followers:User]
+}
+                        </code></pre>
+                    </script>
+                </section>
+--!>
+
+                <section data-background="#262626">
+                    <h2 style="font-family: 'Germania One', cursive; color: red;">GORM is dark and full of terrors</h2>
+                </section>
+
+                <section data-markdown data-background="#262626">
+                    <script type="text/template">
+                        ## Let's take a step back...
+                    </script>
+                </section>
+
+                <section data-markdown data-background="#262626">
+                    <script type="text/template">
+                        ## U<span style="color:white;">nderstanding</span> B<span style="color:white;">ootstrapping</span>
+                        ### What's going on behind the scenes?
+                    </script>
+                </section>
+
+                <section data-markdown data-background="#262626">
+                    <script type="text/template">
+                        ## Your first Domain class
+                        <img src="img/egg.png" height="100"/>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <pre><code class='groovy' data-trim>
+class Book {
+    String name
+    String isbn
+    Author author
+}
+                        </code></pre>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Grails Bootstrap
+                        <pre><code class='groovy' data-trim>grails run-app</code></pre>
+
+                        * Inspect /grails-app <!-- .element: class="fragment" -->
+                        * Classes inside /domain <!-- .element: class="fragment" -->
+                        * Annotates them with @grails.persistence.Entity <!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <pre><code class='bash' data-trim>
+Inspecting [es.greach.gorm.Book]
+[es.greach.gorm.Book] is not a Filters class.
+[es.greach.gorm.Book] is not a Codec class.
+[es.greach.gorm.Book] is not a TagLib class.
+[es.greach.gorm.Book] is not a Service class.
+[es.greach.gorm.Book] is not a Controller class.
+[es.greach.gorm.Book] is not a Bootstrap class.
+[es.greach.gorm.Book] is a Domain class.
+Adding artefact class es.greach.gorm.Book of kind Domain
+                        </pre></code>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## @grails.persistence.Entity
+                        * Includes 'id' and 'version'<!-- .element: class="fragment" -->
+                        * Marks the classes as domain entities<!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <pre><code class='groovy' data-trim>
+@Entity
+class Book {
+    Long id
+    Long version
+
+    String name
+    String isbn
+    Author author
+}
+                        </code></pre>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## You can change the domain directory
+                        * Domain inside /src/
+                        * Manualy annotate them with @Entity
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## 1) Domain classes are processed
+                        ## 2) GORM enhances classes
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Grails initializes the Domain Class
+                        * **Prepares** the relationship properties
+                        * **Resolves** class hierarchy
+                        * **Add** validation capabilities
+                        * **Integrates** domain classes with Spring
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## GORM Enhancer
+                        * Instances API (save, delete...)
+                        * Classes API (findAll, where, withCriteria...)
+                        * Dynamic Finders
+                        * Validation (unique)
+                        <img src="img/superman.png" style=" position: absolute; top: 0px;right: 0px;width: 610px;max-width: none;max-height: none;"/><!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown data-background="#262626">
+                    <script type="text/template">
+                        ## U<span style="color:white;">nderstanding</span> S<span style="color:white;">pring</span>
+                        ### How interact Domain classes and Spring
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <pre><code class='groovy' data-trim>
+class Book {
+    def bookService
+
+    String name
+    String isbn
+    Author author
+
+    String toString() {
+        return bookService.parseBook(this)
+    }
+}
+                        </code></pre>
+
+                        <pre class="fragment"><code class='groovy' data-trim>
+def myBook = new Book()
+println myBook.toString()
+                        </code></pre>
+                        <pre class="fragment"><code class='shell' data-trim>
+[DEBUG] BookService::parseBook
+                        </code></pre>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <pre><code class='groovy' data-trim>
+                        new Book()
+                        </code></pre>
+                        ## ... <!-- .element: class="fragment" -->
+                        ## ... <!-- .element: class="fragment" -->
+
+                        <img class="fragment" src="img/yaki.jpg"/>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## So Grails kind of "cheats"
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Spring Beans for a Domain Class
+                        * BookValidator
+                        * BookPersistentClass
+                        * BookDomainClass
+                        * Book
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <pre><code class='groovy' data-trim>
+                        new Book()
+                        </code></pre>
+
+                        <pre class="fragment"><code class='groovy' data-trim>
+                        Book.constructor = {
+                            def context = ....
+                            return context.getBean("Book")
+                        }
+                        </code></pre>
+                    </script>
+                </section>
+
+                <section data-markdown data-background="#262626">
+                    <script type="text/template">
+                        ## U<span style="color:white;">nderstanding</span> H<span style="color:white;">ibernate</span> G<span style="color:white;">ORM</span>
+                        ### Where the darkness lurks
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## GORM > Hibernate
+                        * GORM provides a beautiful abstraction over hibernate
+                        * No more complicated XML or annotations
+                        * Working configuration by default
+                        * Easy collections
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## But, Hibernate it's still there
+                    </script>
+                </section>
+
+                <section data-markdown data-background="#262626">
+                    <script type="text/template">
+                        ## We have Book defined
+                        ## Let's do something with it
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <pre><code class='groovy' data-trim>
+class Book {
+    String name
+    String isbn
+    Author author
+}
+                        </code></pre>
+
+
+                        <pre class="fragment"><code class='bash' data-trim>
+grails generate-controller Book
+                        </code></pre>
+
+                        <pre class="fragment"><code class='groovy' data-trim>
+// Grails 2.2 scafolding
+class BookController {
+    def save() {
+        def bookInstance = new Book(params)
+        if (!bookInstance.save(flush: true)) {
+            render(view: "create", model: [bookInstance: bookInstance])
+            return
+        }
+        redirect(action: "show", id: bookInstance.id)
+    }
+}
+                        </code></pre>
+                    </script>
+                </section>
+
+                <section data-background="#262626">
+                    <img src="img/facepalm.jpg" width="100%"/>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## OpenSessionInViewInterceptor
+                        <ul>
+                            <li class="fragment">Creates a new **Session** within a **Controller** scope</li>
+                            <li class="fragment">Doesn't create a **Transaction**</li>
+                            <li class="fragment">So... there is NO transaction at the controller</li>
+                            <li class="fragment">After render the session is **flushed**</li>
+                        </ul>
+                    </script>
+                </section>
+
+                <section data-markdown data-background="#262626">
+                    <script type="text/template">
+                        ## Session? Transaction? I'm confused
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Session
+                        * Entry point to the Hibernate Framework
+                        * In-Memory cache
+                        * No thread safe and normaly thread-bound
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Objects
+                        * Inside GORM objects have a "session state"
+                        * There is a life-cycle defined within a session context
+                    </script>
+                </section>
+
+                <section>
+                    <img src="diagrams/hibernate_objects.png" style="height:500px;"/>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Session Flush
+                        * Session checks "dirty objects"
+                        * When flushed the changes are persisted to database
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Transaction
+                        * Database managed
+                        * Access through JDBC Driver (provider specific)
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="img/sessiontransaction.png" width="100%"/>
+                    </script>
+                </section>
+
+                <section data-background="#262626">
+                    <h2>Hibernate Session <span class="fragment" data-fragment-index="1" style="display: block; color: white; padding-top: 20px;">FLUSHING</span></h2>
+                    <h2>vs</h2>
+                    <h2><span class="fragment" data-fragment-index="1" style="display: block; color: white; padding-bottom: 20px;">COMMIT</span>Database Transaction</h2>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Automatic session flushing
+                        * Query executed<!-- .element: class="fragment" -->
+                        * A controller completes<!-- .element: class="fragment" -->
+                        * Before transaction commit<!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Some pitfalls
+                        The 'When did I modified that object?'
+                        <pre><code class='groovy' data-trim>
+def renderBook(String isbn) {
+    def book = Book.findByIsbn(isbn)
+
+    // Render as uppercase
+    book.title = book.title.toUpperCase()
+
+    [book: book]
+}
+                        </code></pre>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Some pitfalls
+                        The 'When did I modified that object?'
+                        <pre><code class='groovy' data-trim data-noescape>
+def renderBook(String isbn) {
+    def book = Book.findByIsbn(isbn)
+
+    // Deattach the object from the session
+    <span style="font-weight:bold;">book.discard()</span>
+
+    // Render as uppercase
+    book.title = book.title.toUpperCase()
+
+    [book: book]
+}
+                        </code></pre>
+                    </script>
+                </section>
+
+
+                <section data-markdown data-background="#262626">
+                    <script type="text/template">
+                        ## Where do I put my transactional logic?
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## withTransaction
+                        <pre><code class='groovy' data-trim>
+Book.withTransaction {
+    // Transactional stuff
+}
+                        </pre></code>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Transactional services
+                        <pre><code class='groovy' data-trim>
+@Transactional
+class BookService {
+    def doTransactionalStuff(){
+        ...
+    }
+}
+                        </pre></code>
+                    </script>
+                </section>
+
+                <section>
+                    <img src="img/caution.jpg"/>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Be careful!
+                        * Don't instanciate the services<!-- .element: class="fragment" -->
+                        * Don't use closures<!-- .element: class="fragment" -->
+                        * Don't use 'missingMethod' or properties<!-- .element: class="fragment" -->
+                        * And...<!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown data-background="#262626">
+                    <script type="text/template">
+                        ## DON'T THROW CHECKED EXCEPTIONS
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Some pitfalls
+                        The 'Rollback where are you?'
+                        <pre><code data-trim>
+def buyBook(String user, String bookTitle, Long qty) {
+    def found = Book.findByTitle(bookTitle)
+
+    // Save a new order for the user
+    def order = new BookOrder(user:user, book:found, quantity: qty)
+    order.save()
+
+    found.stock = found.stock - 1
+
+    // When not found throw exception to rollback
+    if (found.stock < 0) {
+        throw new Exception("This should rollback!")
+    }
+    return found
+}
+                        </code></pre>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Some pitfalls
+                        The 'Rollback where are you?'
+                        <pre><code data-trim data-noescape>
+def buyBook(String user, String bookTitle, Long qty) {
+    def found = Book.findByTitle(bookTitle)
+
+    // Save a new order for the user
+    def order = new BookOrder(user:user, book:found, quantity: qty)
+    order.save()
+
+    found.stock = found.stock - 1
+
+    // When not found throw exception to rollback
+    if (found.stock < 0) {
+        <span style="font-weight: bold;">throw new RuntimeException("This should rollback!")</span>
+    }
+    return found
+}
+                        </code></pre>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## @Transactional vs @Transactional
+                        * Spring @Transactional creates a PROXY<!-- .element: class="fragment" -->
+                            - You can't call this.service and create a new transactional context<!-- .element: class="fragment" -->
+                            - You have to instanciate inject the services<!-- .element: class="fragment" -->
+
+                        * Grails new @Transactional is an AST<!-- .element: class="fragment" -->
+                            - There are no proxies involved the coded is 'weaved' into the method<!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown data-background="#262626">
+                    <script type="text/template">
+                        ## U<span style="color:white;">nderstanding</span> P<span style="color:white;">arallel</span> G<span style="color:white;">ORM</span>
+                        ### Brace yourselves
+                    </script>
+                </section>
+
+                <section data-markdown data-background="#262626">
+                    <script type="text/template">
+                        ## Session is Thread-Local
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Some pitfalls
+                        The 'Concurrency, It's easy!!'
+                        <pre><code data-trim>
+def processOrders() {
+    def orders = BookOrder.list()
+
+    // Parallel update orders
+    GParsPool.withPool(10) {
+        orders.eachParallel { order ->
+            dispatchingService.dispatch(order)
+            order.sent = true
+            order.save()
+        }
+    }
+}
+                        </code></pre>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Some pitfalls
+                        The 'Concurrency, It's easy!!'
+                        <pre><code data-trim data-noescape>
+def processOrders() {
+    def orders = BookOrder.list()
+
+    // Parallel update orders
+    GParsPool.withPool(10) {
+        orders.eachParallel { order ->
+            <span style="font-weight:bold;">BookOrder.withNewSession {</span>
+                <span style="font-weight:bold;">order.merge()</span>
+
+                dispatchingService.dispatch(order)
+                order.sent = true
+                order.save()
+            <span style="font-weight:bold;">}</span>
+        }
+    }
+}
+                        </code></pre>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Thread-local session
+                        * Recovers a list of orders
+
+                        <pre><code class="groovy" data-trim>
+def orders = Orders.findTodayOrders()
+                        </pre></code>
+
+                        * Each item is bound to the request session
+                        * When we spawn the concurrent threads the objects don't know where is their session
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Grails 2.3 Async GORM
+                        * The new async GORM has the same problems
+                        * Each promise is executed in a different thread.
+
+                        <pre><code data-trim>
+def promise = Person.async.findByFirstName("Homer")
+def person = promise.get()
+person.merge() // Rebound the object to the session
+person.firstName = "Bart"
+                        </code></pre>
+                    </script>
+                </section>
+
+
+                <!--
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Understanding Collection problems
+                        ### When easy stops being simple
+                    </script>
+                </section>
+
+                <section data-markdown data-background="#262626">
+                    <script type="text/template">
+                        ## GORM Collections
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## GORM Collections
+                        * Provides an easy abstraction to relationships
+                        * Easy cascade of deletes and updates
+                        * Lazy-loaded
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Problem
+                        * Sometimes the number of items of the collection makes this model too expensive
+
+                        <pre><code class='groovy' data-trim>
+class User {
+    String name
+    static hasMany = [followers:User]
+}
+                        </pre></code>
+
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        * If you're not carefull you can load the whole User table in memory
+                    </script>
+                </section>
+                --!>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Recap
+                        * GORM is a very cool abstraction
+                        * You have to be aware of some of the internals
+                        * With great power, comes great responsibility
+                    </script>
+                </section>
+
+                <section data-background="#262626">
+                    <h1><span style="color:#95AC22">T</span><span style="color:#ffffff;">hanks</span></h1>
+                    <img src="img/logo_greach.png" width="250" style="margin-top: 100px;"/>
+                    <p style="color:grey">@alotor</p>
+                    <a href="http://goo.gl/U6sK5E">http://goo.gl/U6sK5E</a>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Bonus track (references)
+http://spring.io/blog/2010/06/23/gorm-gotchas-part-1/
+http://sacharya.com/tag/gorm-transaction/
+http://www.anyware.co.uk/2005/2012/11/12/the-false-optimism-of-gorm-and-hibernate/
+http://docs.jboss.org/hibernate/orm/3.6/reference/en-US/html_single/#transactions-basics
+http://www.infoq.com/presentations/GORM-Performance
+http://www.infoq.com/presentations/grails-transaction
+http://blog.octo.com/en/transactions-in-grails/
+https://community.jboss.org/wiki/OpenSessioninView
+                    </script>
+                </section>
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: false,
+                progress: true,
+                history: true,
+                center: true,
+                keyboard: true,
+                slideNumber: true,
+
+                theme: 'greach', // available themes are in /css/theme
+                transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
+                backgroundTransition: 'slide',
+                transitionSpeed: 'fast',
+
+                // Parallax scrolling
+                // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+                // parallaxBackgroundSize: '2100px 900px',
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

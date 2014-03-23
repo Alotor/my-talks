@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1052.3622"
+   height="744.09448"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="hibernate_session.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="365.56902"
+     inkscape:cy="366.49441"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1362"
+     inkscape:window-height="729"
+     inkscape:window-x="0"
+     inkscape:window-y="18"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-308.2677)">
+    <rect
+       style="fill:#241c1c;fill-opacity:1;stroke:#000000;stroke-width:1.30308819;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect6750"
+       width="284.46994"
+       height="40.013012"
+       x="189.88477"
+       y="413.98132"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_session.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#95ac22;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"
+       x="248.23302"
+       y="448.2847"
+       id="text6752"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_session.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131"><tspan
+         sodipodi:role="line"
+         id="tspan6754"
+         x="248.23302"
+         y="448.2847">session</tspan></text>
+    <rect
+       style="fill:#241c1c;fill-opacity:1;stroke:#000000;stroke-width:1.33449197;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect6750-4"
+       width="298.58066"
+       height="39.981606"
+       x="651.5401"
+       y="413.99704"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_session.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#95ac22;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"
+       x="668.71124"
+       y="448.2847"
+       id="text6752-8"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_session.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131"><tspan
+         sodipodi:role="line"
+         id="tspan6754-4"
+         x="668.71124"
+         y="448.2847">transaction</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.87279344px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 332.05613,457.34378 0,426.18858"
+       id="path6803"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_session.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.87279344px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 800.894,455.0359 0,426.18861"
+       id="path6803-6"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_session.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 352.14285,555.21932 428.57143,0"
+       id="path6823"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_session.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 352.14285,635.57645 428.57143,0"
+       id="path6823-0"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_session.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 352.14285,715.9336 428.57143,0"
+       id="path6823-0-8"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_session.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 352.14285,796.29075 428.57143,0"
+       id="path6823-0-8-7"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_session.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 352.85715,876.64789 428.57143,0"
+       id="path6823-0-8-7-7"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alotor/Proyectos/greach-2014/slides/diagrams/hibernate_session.png"
+       inkscape:export-xdpi="131"
+       inkscape:export-ydpi="131" />
+  </g>
+</svg>
