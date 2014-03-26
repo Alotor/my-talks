@@ -45,7 +45,6 @@ class PitfallsIntegrationSpec extends IntegrationSpec {
             qty = 10
     }
 
-    @IgnoreRest
     void "Concurrency, It's easy!!"() {
         setup: "Book object"
             def book = new Book(title:title, isbn:isbn, price:price, stock: 0).save()

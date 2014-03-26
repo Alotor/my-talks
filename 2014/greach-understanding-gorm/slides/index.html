@@ -156,6 +156,7 @@ class User {
                 <section data-markdown data-background="#262626">
                     <script type="text/template">
                         ## Let's take a step back...
+                        ## and start at the beginning
                     </script>
                 </section>
 
@@ -220,9 +221,23 @@ Adding artefact class es.greach.gorm.Book of kind Domain
 
                 <section data-markdown>
                     <script type="text/template">
+                        ## Grails initializes the Domain Class
+                        <ul>
+                            <li class="fragment">**Prepares** the relationship properties</li>
+                            <li class="fragment">**Resolves** class hierarchy</li>
+                            <li class="fragment">**Add** validation capabilities</li>
+                            <li class="fragment">**Integrates** domain classes with Spring</li>
+                        </ul>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
                         ## @grails.persistence.Entity
                         * Includes 'id' and 'version'<!-- .element: class="fragment" -->
                         * Marks the classes as domain entities<!-- .element: class="fragment" -->
+                        * You can put domain classes inside /src/main/groovy<!-- .element: class="fragment" -->
+                        * Manualy annotate them with @Entity<!-- .element: class="fragment" -->
                     </script>
                 </section>
 
@@ -244,28 +259,7 @@ class Book {
 
                 <section data-markdown>
                     <script type="text/template">
-                        ## You can change the domain directory
-                        * Domain inside /src/main/groovy<!-- .element: class="fragment" -->
-                        * Manualy annotate them with @Entity<!-- .element: class="fragment" -->
-                    </script>
-                </section>
-
-                <section data-markdown>
-                    <script type="text/template">
-                        ## 1) Domain classes are found
                         ## 2) GORM enhances classes
-                    </script>
-                </section>
-
-                <section data-markdown>
-                    <script type="text/template">
-                        ## Grails initializes the Domain Class
-                        <ul>
-                            <li class="fragment">**Prepares** the relationship properties</li>
-                            <li class="fragment">**Resolves** class hierarchy</li>
-                            <li class="fragment">**Add** validation capabilities</li>
-                            <li class="fragment">**Integrates** domain classes with Spring</li>
-                        </ul>
                     </script>
                 </section>
 
@@ -318,16 +312,16 @@ println myBook.toString()
                         <pre><code class='groovy' data-trim>
                         new Book()
                         </code></pre>
-                        ## ... <!-- .element: class="fragment" -->
-                        ## ... <!-- .element: class="fragment" -->
+                        ## DI needs control on object instantiation<!-- .element: class="fragment" -->
+                        ## Spring should create the object<!-- .element: class="fragment" -->
 
-                        <img class="fragment" src="img/yaki.jpg"/>
                     </script>
                 </section>
 
                 <section data-markdown>
                     <script type="text/template">
                         ## So Grails kind of "cheats"
+                        <img src="img/yaki.jpg"/>
                     </script>
                 </section>
 
@@ -348,9 +342,9 @@ println myBook.toString()
                         </code></pre>
 
                         <pre class="fragment"><code class='groovy' data-trim>
-                        Book.constructor = {
-                            def context = ....
-                            return context.getBean("Book")
+                        Book.constructor = {->
+                            def ctx = .... // Spring context
+                            context.getBean("Book")
                         }
                         </code></pre>
                     </script>
@@ -359,7 +353,7 @@ println myBook.toString()
                 <section data-markdown>
                     <script type="text/template">
                         ## What that means?
-                        * When using GORM your instances are Spring objects<!-- .element: class="fragment" -->
+                        * Spring creates your objects<!-- .element: class="fragment" -->
                         * Be careful when using some capabilities<!-- .element: class="fragment" -->
                         * Example: Spring AOP<!-- .element: class="fragment" -->
                     </script>
@@ -376,13 +370,13 @@ println myBook.toString()
                     <script type="text/template">
                         ## GORM > Hibernate
                         * GORM provides a beautiful abstraction over hibernate<!-- .element: class="fragment" -->
+                        * Convention over configuration<!-- .element: class="fragment" -->
                         * No more complicated XML or annotations<!-- .element: class="fragment" -->
-                        * Working configuration by default<!-- .element: class="fragment" -->
-                        * Easy collections<!-- .element: class="fragment" -->
+                        * Better collections<!-- .element: class="fragment" -->
                     </script>
                 </section>
 
-                <section data-markdown>
+                <section data-markdown data-background="#262626">
                     <script type="text/template">
                         ## But, Hibernate it's still there
                         <img src="img/museum.gif" width="80%"/>
@@ -391,7 +385,7 @@ println myBook.toString()
 
                 <section data-markdown data-background="#262626">
                     <script type="text/template">
-                        ## We have Book defined
+                        ## We have <span style="color:white">Book</span> defined
                         ## Let's do something with it
                     </script>
                 </section>
@@ -415,6 +409,28 @@ grails generate-controller Book
 // Grails 2.2 scafolding
 class BookController {
     def save() {
+        def instance = new Book(params)
+        if (!instance.save(flush: true)) {
+            render(view: "create", model: [bookInstance: instance])
+            return
+        }
+        redirect(action: "show", id: instance.id)
+    }
+}
+                        </code></pre>
+                    </script>
+                </section>
+
+                <section data-background="#262626">
+                    <img src="img/facepalm.jpg" width="100%"/>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <pre><code class='groovy' data-trim>
+// Grails 2.2 scafolding
+class BookController {
+    def save() {
         def bookInstance = new Book(params)
         if (!bookInstance.save(flush: true)) {
             render(view: "create", model: [bookInstance: bookInstance])
@@ -425,10 +441,6 @@ class BookController {
 }
                         </code></pre>
                     </script>
-                </section>
-
-                <section data-background="#262626">
-                    <img src="img/facepalm.jpg" width="100%"/>
                 </section>
 
                 <section data-markdown>
@@ -597,10 +609,9 @@ class BookService {
                             new TransactionalService().doTransactionalStuff()
                         </pre></code>
                         * Don't use closures<!-- .element: class="fragment" -->
-                        <pre><code class='groovy' data-trim>
+                        <pre style="width:auto;"><code class='groovy' data-trim>
                             def transactionalMethod = { ... }
                         </pre></code>
-                        * Don't use 'missingMethod' or properties<!-- .element: class="fragment" -->
                         * And...<!-- .element: class="fragment" -->
                     </script>
                 </section>
@@ -663,11 +674,7 @@ def buyBook(String user, String bookTitle, Long qty) {
                     <script type="text/template">
                         ## @Transactional vs @Transactional
                         * Spring @Transactional creates a PROXY<!-- .element: class="fragment" -->
-                            - You can't call this.service and create a new transactional context<!-- .element: class="fragment" -->
-                            - You have to instanciate inject the services<!-- .element: class="fragment" -->
-
                         * Grails new @Transactional is an AST<!-- .element: class="fragment" -->
-                            - There are no proxies involved the coded is 'weaved' into the method<!-- .element: class="fragment" -->
                     </script>
                 </section>
 
@@ -707,6 +714,19 @@ def processOrders() {
 
                 <section data-markdown>
                     <script type="text/template">
+                        ## Thread-local session
+                        * Recovers a list of orders
+                        <pre><code class="groovy" data-trim>
+def orders = Orders.findTodayOrders()
+                        </pre></code>
+
+                        * Each item is bound to the request session
+                        * When we spawn the concurrent threads the objects don't know where is their session
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
                         ## Some pitfalls
                         The 'Concurrency, It's easy!!'
                         <pre><code data-trim data-noescape>
@@ -732,29 +752,16 @@ def processOrders() {
 
                 <section data-markdown>
                     <script type="text/template">
-                        ## Thread-local session
-                        * Recovers a list of orders
-                        <pre><code class="groovy" data-trim>
-def orders = Orders.findTodayOrders()
-                        </pre></code>
-
-                        * Each item is bound to the request session
-                        * When we spawn the concurrent threads the objects don't know where is their session
-                    </script>
-                </section>
-
-                <section data-markdown>
-                    <script type="text/template">
                         ## Grails 2.3 Async GORM
-                        * The new async GORM has the same problems
-                        * Each promise is executed in a different thread.
-
+                        * The new async GORM solves some problems
+                        * Objects are retrieved in another thread
                         <pre><code data-trim>
 def promise = Person.async.findByFirstName("Homer")
 def person = promise.get()
 person.merge() // Rebound the object to the session
 person.firstName = "Bart"
                         </code></pre>
+                        * After the promise is resolved we have to attach the object
                     </script>
                 </section>
 
@@ -804,7 +811,7 @@ class User {
                 </section>
                 --!>
                 <section data-background="#262626">
-                    <img src="img/carlton.gif" width="100%"/>
+                    <img src="img/thats-all-folks.jpg" width="100%"/>
                 </section>
 
                 <section data-markdown>
