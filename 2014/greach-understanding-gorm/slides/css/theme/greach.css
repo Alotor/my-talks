@@ -157,7 +157,9 @@ body {
   background-color: #95ac22; }
 
 .reveal pre code {
-  padding: 30px; }
+  padding: 30px;
+  overflow: hidden;
+}
 
 .reveal h2 {
   margin-bottom: 30px;

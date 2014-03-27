@@ -309,10 +309,10 @@ println myBook.toString()
 
                 <section data-markdown>
                     <script type="text/template">
+                        ## DI needs control on object instantiation<!-- .element: class="fragment" -->
                         <pre><code class='groovy' data-trim>
                         new Book()
                         </code></pre>
-                        ## DI needs control on object instantiation<!-- .element: class="fragment" -->
                         ## Spring should create the object<!-- .element: class="fragment" -->
 
                     </script>
@@ -474,8 +474,11 @@ class BookController {
                 <section data-markdown>
                     <script type="text/template">
                         ## GORM Entities
-                        * Inside GORM objects have a "session state"<!-- .element: class="fragment" -->
-                        * There is a life-cycle defined within a session context<!-- .element: class="fragment" -->
+                        * Entities have a relationship with the session<!-- .element: class="fragment" -->
+                        * This defines a "life-cycle"<!-- .element: class="fragment" -->
+                        <li class="fragment"><b>Transient</b> - not yet persisted</li>
+                        <li class="fragment"><b>Persistent</b> - has a session</li>
+                        <li class="fragment"><b>Detached</b> - persisted but without session</li>
                     </script>
                 </section>
 
@@ -486,7 +489,7 @@ class BookController {
                 <section data-markdown>
                     <script type="text/template">
                         ## Session Flush
-                        * Session checks "dirty objects"<!-- .element: class="fragment" -->
+                        * Session checks "DIRTY OBJECTS"<!-- .element: class="fragment" -->
                         * When flushed the changes are persisted to database<!-- .element: class="fragment" -->
                     </script>
                 </section>
@@ -510,6 +513,7 @@ class BookController {
                 <section data-markdown>
                     <script type="text/template">
                         <img src="img/sessiontransaction.png" width="100%"/>
+                        <span style="font-size:25px;">Peter Ledbrok -  http://spring.io/blog/2010/06/23/gorm-gotchas-part-1/</span>
                     </script>
                 </section>
 
@@ -833,14 +837,19 @@ class User {
                 <section data-markdown>
                     <script type="text/template">
                         ## Bonus track (references)
-http://spring.io/blog/2010/06/23/gorm-gotchas-part-1/
-http://sacharya.com/tag/gorm-transaction/
-http://www.anyware.co.uk/2005/2012/11/12/the-false-optimism-of-gorm-and-hibernate/
-http://docs.jboss.org/hibernate/orm/3.6/reference/en-US/html_single/#transactions-basics
-http://www.infoq.com/presentations/GORM-Performance
-http://www.infoq.com/presentations/grails-transaction
-http://blog.octo.com/en/transactions-in-grails/
-https://community.jboss.org/wiki/OpenSessioninView
+                        * http://spring.io/blog/2010/06/23/gorm-gotchas-part-1/
+                        * http://sacharya.com/tag/gorm-transaction/
+                        * http://www.anyware.co.uk/2005/2012/11/12/the-false-optimism-of-gorm-and-hibernate/
+                        * http://docs.jboss.org/hibernate/orm/3.6/reference/en-US/html_single/#transactions-basics
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Bonus track (references)
+                        * http://www.infoq.com/presentations/GORM-Performance
+                        * http://www.infoq.com/presentations/grails-transaction
+                        * http://blog.octo.com/en/transactions-in-grails/
+                        * https://community.jboss.org/wiki/OpenSessioninView
                     </script>
                 </section>
             </div>
