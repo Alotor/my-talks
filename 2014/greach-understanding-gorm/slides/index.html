@@ -222,6 +222,7 @@ class Book {
                 <section data-markdown>
                     <script type="text/template">
                         <pre><code class='bash' data-trim>
+DEBUG commons.DefaultGrailsApplication
 Inspecting [es.greach.gorm.Book]
 [es.greach.gorm.Book] is not a Filters class.
 [es.greach.gorm.Book] is not a Codec class.
@@ -294,6 +295,14 @@ class Book {
 
                 <section data-markdown>
                     <script type="text/template">
+                        <pre><code class='bash' data-trim>
+DEBUG cfg.HibernateUtils  - Enhancing GORM entity Book
+                        </pre></code>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
                         ## GORM Enhancer
                         * Instances API (save, delete...)
                         * Classes API (findAll, where, withCriteria...)
@@ -305,11 +314,11 @@ class Book {
 
                 <section data-markdown>
                     <script type="text/template">
-                        ## Why am I explain this?
-                        * Distinct Grails-base capabilities vs GORM<!-- .element: class="fragment" -->
+                        ## Bootstraping
+                        * Distinct Grails-base vs GORM<!-- .element: class="fragment" -->
                         * @Entity could potentialy be used outside Grails<!-- .element: class="fragment" -->
-                            - Problem with AST's<!-- .element: class="fragment" -->
-                        * Just is nice to know. Isn't it?<!-- .element: class="fragment" -->
+                            - Problems with AST's<!-- .element: class="fragment" -->
+                            - Grails dependencies<!-- .element: class="fragment" -->
                     </script>
                 </section>
 
@@ -610,7 +619,7 @@ def renderBook(String isbn) {
 
                 <section data-markdown data-background="#262626">
                     <script type="text/template">
-                        ## Where do I put my transactional logic?
+                        ## Where do I put my <span style="color:white">transactional</span> logic?
                     </script>
                 </section>
 
@@ -794,19 +803,38 @@ def processOrders() {
 
                 <section data-markdown>
                     <script type="text/template">
+                        ## Rule of thumb
+                        * Session = Thread<!-- .element: class="fragment" -->
+                        * If entity has recovered by another thread<!-- .element: class="fragment" -->
+                        * Put it in the current thread session<!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
                         ## Grails 2.3 Async GORM
-                        * The new async GORM solves some problems
-                        * Objects are retrieved in another thread
-                        <pre><code data-trim>
+                        * The new async GORM solves some problems<!-- .element: class="fragment" -->
+                        * Manages the session for the promise<!-- .element: class="fragment" -->
+                        <pre class="fragment"><code data-trim>
+def promise = Person.async.findByFirstName("Homer")
+def person = promise.get()
+                        </code></pre>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Grails 2.3 Async GORM
+                        * Problem: Object has been retrieved by another thread<!-- .element: class="fragment" -->
+                        * After the promise is resolved we have to attach the object<!-- .element: class="fragment" -->
+                        <pre class="fragment"><code data-trim>
 def promise = Person.async.findByFirstName("Homer")
 def person = promise.get()
 person.merge() // Rebound the object to the session
 person.firstName = "Bart"
                         </code></pre>
-                        * After the promise is resolved we have to attach the object
                     </script>
                 </section>
-
 
                 <!--
                 <section data-markdown>
